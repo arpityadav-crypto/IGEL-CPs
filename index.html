@@ -1,44 +1,256 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Website</title>
-    <style>
-        body {
-            background: #101827;
-            color: white;
-            font-family: Arial;
-            text-align: center;
-            padding: 70px 15px;
-        }
-
-        h1 {
-            color: #38bdf8;
-            font-size: 40px;
-        }
-
-        p {
-            font-size: 18px;
-        }
-
-        button {
-            background: #38bdf8;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudyHub | Learn Better</title>
+<style>
+:root{--bg:#0b1120;--panel:#151f33;--text:#f1f5f9;--muted:#aab8ce;--blue:#60a5fa;--line:#293750}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
+header{padding:24px 5%;background:#101a2d;border-bottom:1px solid var(--line)}
+.brand{font-size:27px;font-weight:bold;color:var(--blue)}
+header p{margin:4px 0;color:var(--muted)}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+button,select,input,textarea{font:inherit}
+button{cursor:pointer;border:0;border-radius:9px;padding:10px 15px;background:var(--blue);color:#07111f;font-weight:bold}
+nav button,.secondary{background:#24334c;color:white}
+nav button.active{background:var(--blue);color:#07111f}
+main{max-width:1100px;margin:auto;padding:24px 5% 60px}
+h1,h2,h3{line-height:1.25}
+.muted{color:var(--muted)}
+.hero{padding:26px;border-radius:18px;background:linear-gradient(130deg,#1d3557,#17243b);margin-bottom:22px}
+.hero h1{font-size:clamp(27px,5vw,42px);margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:var(--panel);border:1px solid var(--line);padding:19px;border-radius:15px;margin-bottom:15px}
+.card h3{margin-top:0}
+.stat{font-size:26px;font-weight:bold;color:var(--blue)}
+.section{display:none}
+.section.active{display:block}
+label{display:block;margin:12px 0 5px;color:var(--muted)}
+input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:8px;background:#0d1728;color:white}
+textarea{min-height:95px;resize:vertical}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1}
+.note{border-left:3px solid var(--blue);padding-left:12px;margin:14px 0}
+.option{display:block;width:100%;text-align:left;background:#24334c;color:white;margin:8px 0}
+.option:hover{background:#344a69}
+.result{padding:12px;border-radius:9px;background:#0d1728;margin-top:12px}
+.task{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.task input{width:auto}
+.task span{flex:1;overflow-wrap:anywhere}
+.task.done span{text-decoration:line-through;color:var(--muted)}
+.small{font-size:13px;color:var(--muted)}
+footer{text-align:center;padding:24px;color:var(--muted);border-top:1px solid var(--line)}
+a{color:var(--blue)}
+</style>
 </head>
 <body>
+<header>
+  <div class="brand">📘 StudyHub</div>
+  <p>Your study companion | Tumhari padhai ka saathi</p>
+  <nav>
+    <button class="active" data-tab="home">Home</button>
+    <button data-tab="notes">Notes</button>
+    <button data-tab="quiz">Quiz</button>
+    <button data-tab="planner">Planner</button>
+    <button data-tab="doubts">Doubt Help</button>
+  </nav>
+</header>
 
-    <h1>Welcome to My Website!</h1>
+<main>
+<section id="home" class="section active">
+  <div class="hero">
+    <p>LEARN • PRACTISE • IMPROVE</p>
+    <h1>Study smarter, not harder.</h1>
+    <p>Class 9–12 ke students ke liye notes, quizzes aur daily study planning — all in one place!</p>
+    <label for="classPick">Choose your class / Apni class chuno</label>
+    <select id="classPick">
+      <option value="9">Class 9</option><option value="10">Class 10</option>
+      <option value="11" selected>Class 11</option><option value="12">Class 12</option>
+    </select>
+    <p id="welcome" class="muted">Welcome, Class 11 student!</p>
+  </div>
+  <div class="grid">
+    <div class="card"><div class="stat">📚</div><h3>Study Notes</h3><p class="muted">Revise important concepts.</p><button data-go="notes">Explore notes</button></div>
+    <div class="card"><div class="stat">✍️</div><h3>Quick Quiz</h3><p class="muted">Test what you know.</p><button data-go="quiz">Start quiz</button></div>
+    <div class="card"><div class="stat">📅</div><h3>Study Planner</h3><p class="muted">Organise your daily tasks.</p><button data-go="planner">Plan my day</button></div>
+    <div class="card"><div class="stat">💡</div><h3>Doubt Help</h3><p class="muted">Get help with common concepts.</p><button data-go="doubts">Ask a doubt</button></div>
+  </div>
+  <div class="card"><h3>Today's progress</h3><p>Tasks completed: <strong id="progress">0 / 0</strong></p><div class="small">Your planner tasks are saved in this browser.</div></div>
+</section>
 
-    <p>Hello Bro! This is my first website.</p>
+<section id="notes" class="section">
+  <h2>📚 Study Notes / पढ़ाई के नोट्स</h2>
+  <p class="muted">Choose a class, subject and topic.</p>
+  <div class="card">
+    <label for="noteClass">Class</label><select id="noteClass"><option>9</option><option>10</option><option selected>11</option><option>12</option></select>
+    <label for="subject">Subject</label>
+    <select id="subject"><option>Physics</option><option>Chemistry</option><option>Mathematics</option><option>Biology</option><option>English</option><option>Computer Science</option></select>
+    <label for="topic">Topic</label>
+    <select id="topic"><option value="motion">Motion</option><option value="force">Force and Laws of Motion</option><option value="atoms">Atoms and Molecules</option><option value="algebra">Algebra</option><option value="python">Python Basics</option></select>
+    <button id="showNotes">Show notes</button>
+  </div>
+  <div class="card" id="noteResult"><h3>Welcome!</h3><p>Choose a topic and press Show notes.</p></div>
+  <p class="small">Note: These are starter revision notes, not a complete syllabus. Check your current board syllabus and textbook.</p>
+</section>
 
-    <button onclick="alert('Website successfully working!')">
-        Click Me
-    </button>
+<section id="quiz" class="section">
+  <h2>✍️ Quick Quiz</h2>
+  <div class="card">
+    <label for="quizSubject">Quiz subject</label>
+    <select id="quizSubject"><option value="science">General Science</option><option value="math">Mathematics</option><option value="computer">Computer Science</option></select>
+    <button id="startQuiz">Start / Restart quiz</button>
+  </div>
+  <div class="card" id="quizArea"><p>Select a subject and start your quiz!</p></div>
+</section>
 
+<section id="planner" class="section">
+  <h2>📅 Daily Study Planner</h2>
+  <p class="muted">Add tasks, mark them complete and organise your day.</p>
+  <div class="card">
+    <label for="taskText">Task / Study goal</label><input id="taskText" placeholder="e.g. Revise Physics chapter 1">
+    <label for="taskDate">Date</label><input type="date" id="taskDate">
+    <button id="addTask">+ Add task</button>
+  </div>
+  <div class="card"><h3>Your tasks</h3><div id="taskList"></div><p id="emptyTasks" class="muted">No tasks yet. Add your first goal!</p><button id="clearDone" class="secondary">Clear completed</button></div>
+</section>
+
+<section id="doubts" class="section">
+  <h2>💡 Doubt Help / सवाल पूछो</h2>
+  <p class="muted">Ask a question about common study concepts.</p>
+  <div class="card">
+    <label for="doubtSubject">Subject</label><select id="doubtSubject"><option value="general">General Study</option><option value="math">Mathematics</option><option value="physics">Physics</option><option value="chemistry">Chemistry</option><option value="computer">Computer Science</option></select>
+    <label for="doubtText">Your question / Apna sawaal</label>
+    <textarea id="doubtText" placeholder="e.g. What is a variable in Python?"></textarea>
+    <button id="askDoubt">Find help</button>
+    <div id="doubtResult" class="result" hidden></div>
+  </div>
+  <div class="card"><h3>Need more help?</h3><p>This starter helper answers a few built-in topics. For questions it doesn't recognise, use your textbook, teacher or a trusted learning resource. You can later connect an AI service to make this a real AI doubt solver.</p></div>
+</section>
+</main>
+<footer>StudyHub © 2026 · Keep learning, one step at a time. 🌟</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function go(tab){
+ document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id===tab));
+ document.querySelectorAll('nav button[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.tab)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+
+$('classPick').addEventListener('change',()=>{
+ $('welcome').textContent='Welcome, Class '+$('classPick').value+' student!';
+ $('noteClass').value=$('classPick').value;
+});
+$('taskDate').value=new Date().toLocaleDateString('en-CA');
+
+const notes={
+ motion:{title:'Motion / गति',text:'Motion describes a change in position over time. | गति का अर्थ समय के साथ स्थिति में बदलाव है.',points:['Distance is total path length; displacement is change in position.','Speed = distance ÷ time.','Velocity includes direction; speed does not.','Acceleration = change in velocity ÷ time.']},
+ force:{title:'Force / बल',text:'A force is a push or pull that can change motion or shape.',points:['Newton’s first law: motion stays unchanged unless a net external force acts.','Second law: net force = mass × acceleration.','Third law: forces occur in equal and opposite pairs acting on different objects.']},
+ atoms:{title:'Atoms and Molecules',text:'Atoms are basic units of elements; molecules contain bonded atoms.',points:['Elements contain one kind of atom.','Compounds contain elements chemically combined in fixed proportions.','Check your class textbook for the exact chapter scope.']},
+ algebra:{title:'Algebra / बीजगणित',text:'Algebra uses symbols to represent numbers and relationships.',points:['Combine like terms: 2x + 3x = 5x.','If x + 4 = 9, subtract 4 from both sides to get x = 5.','Apply the same operation to both sides of an equation.']},
+ python:{title:'Python Basics',text:'Python is a programming language. | Python एक programming language है.',points:['A variable stores a value: age = 16','print("Hello") displays text.','input() reads text entered by a user.','Use if/elif/else to choose between conditions.']}
+};
+$('showNotes').addEventListener('click',()=>{
+ const topic=notes[$('topic').value];
+ $('noteResult').innerHTML='<h3></h3><p></p><ul></ul>';
+ $('noteResult').querySelector('h3').textContent=topic.title+' · Class '+$('noteClass').value;
+ $('noteResult').querySelector('p').textContent=topic.text;
+ topic.points.forEach(p=>{const li=document.createElement('li');li.textContent=p;$('noteResult').querySelector('ul').appendChild(li)});
+});
+
+const questions={
+ science:[
+ {q:'Which gas do plants absorb during photosynthesis?',o:['Oxygen','Carbon dioxide','Nitrogen','Hydrogen'],a:1},
+ {q:'What is the SI unit of force?',o:['Joule','Watt','Newton','Pascal'],a:2},
+ {q:'Which organ pumps blood around the human body?',o:['Lungs','Heart','Kidney','Stomach'],a:1}],
+ math:[
+ {q:'What is 12 × 8?',o:['84','96','108','86'],a:1},
+ {q:'Solve: x + 7 = 12.',o:['3','4','5','6'],a:2},
+ {q:'What is the square of 9?',o:['18','72','81','99'],a:2}],
+ computer:[
+ {q:'Which Python command displays output?',o:['input()','print()','type()','range()'],a:1},
+ {q:'Which symbol starts a Python comment?',o:['//','#','<!--','**'],a:1},
+ {q:'Which type stores True or False?',o:['str','int','bool','list'],a:2}]
+};
+let quizList=[],quizIndex=0,quizScore=0,quizLocked=false;
+function renderQuiz(){
+ const area=$('quizArea');
+ if(quizIndex>=quizList.length){
+ area.innerHTML='<h3>Quiz complete! / क्विज़ पूरा हुआ!</h3><p>Your score: <strong>'+quizScore+' / '+quizList.length+'</strong></p><button id="again">Try again</button>';
+ $('again').onclick=startQuiz;return;
+ }
+ quizLocked=false;
+ const q=quizList[quizIndex];
+ area.innerHTML='<p class="small">Question '+(quizIndex+1)+' of '+quizList.length+'</p><h3></h3><div id="options"></div><p id="answerFeedback" aria-live="polite"></p>';
+ area.querySelector('h3').textContent=q.q;
+ q.o.forEach((opt,i)=>{
+ const b=document.createElement('button');b.className='option';b.textContent=String.fromCharCode(65+i)+'. '+opt;
+ b.onclick=()=>{
+ if(quizLocked)return;quizLocked=true;
+ if(i===q.a){quizScore++;$('answerFeedback').textContent='Correct! / सही जवाब!';}
+ else $('answerFeedback').textContent='Not quite. Correct answer: '+q.o[q.a];
+ const next=document.createElement('button');next.textContent=quizIndex===quizList.length-1?'See score':'Next question';
+ next.style.marginTop='12px';next.onclick=()=>{quizIndex++;renderQuiz()};area.appendChild(next);
+ };
+ $('options').appendChild(b);
+ });
+}
+function startQuiz(){
+ quizList=questions[$('quizSubject').value];quizIndex=0;quizScore=0;renderQuiz();
+}
+$('startQuiz').onclick=startQuiz;
+
+let tasks=[];
+try{tasks=JSON.parse(localStorage.getItem('studyhub-tasks')||'[]');if(!Array.isArray(tasks))tasks=[]}catch(e){tasks=[]}
+function saveTasks(){try{localStorage.setItem('studyhub-tasks',JSON.stringify(tasks))}catch(e){}renderTasks()}
+function renderTasks(){
+ const list=$('taskList');list.replaceChildren();
+ $('emptyTasks').hidden=tasks.length>0;
+ tasks.forEach(t=>{
+ const row=document.createElement('div');row.className='task'+(t.done?' done':'');
+ const check=document.createElement('input');check.type='checkbox';check.checked=t.done;check.setAttribute('aria-label','Mark task complete');
+ check.onchange=()=>{t.done=check.checked;saveTasks()};
+ const title=document.createElement('span');title.textContent=t.text+' · '+t.date;
+ const del=document.createElement('button');del.className='secondary';del.textContent='Delete';del.onclick=()=>{tasks=tasks.filter(x=>x.id!==t.id);saveTasks()};
+ row.append(check,title,del);list.appendChild(row);
+ });
+ $('progress').textContent=tasks.filter(t=>t.done).length+' / '+tasks.length;
+}
+$('addTask').onclick=()=>{
+ const text=$('taskText').value.trim(),date=$('taskDate').value;
+ if(!text){alert('Please enter a study task. / Apna task likho.');return}
+ tasks.push({id:Date.now()+Math.random(),text,date:date||'No date',done:false});
+ $('taskText').value='';saveTasks();
+};
+$('clearDone').onclick=()=>{tasks=tasks.filter(t=>!t.done);saveTasks()};
+renderTasks();
+
+const help=[
+ {keys:['variable','variables','python variable'],subject:'computer',answer:'A variable is a name that refers to a value. Example: age = 16. Variable ek naam hai jo value ko refer karta hai.'},
+ {keys:['loop','for loop'],subject:'computer',answer:'A loop repeats a block of code. A for loop can iterate through a sequence. Loop code ko baar-baar chalane ke kaam aata hai.'},
+ {keys:['photosynthesis'],subject:'biology',answer:'Photosynthesis is the process in which green plants use light energy to make food from carbon dioxide and water, releasing oxygen.'},
+ {keys:['newton','force'],subject:'physics',answer:'Force can change an object’s motion. Near Earth’s surface, weight is the gravitational force on an object: W = m × g.'},
+ {keys:['speed','velocity'],subject:'physics',answer:'Speed = distance ÷ time. Velocity is displacement ÷ time and includes direction. Speed is scalar; velocity is a vector.'},
+ {keys:['atom','molecule'],subject:'chemistry',answer:'An atom is the basic unit of an element. A molecule consists of two or more atoms chemically bonded together.'},
+ {keys:['equation','solve x','algebra'],subject:'math',answer:'To solve an equation, perform the same operation on both sides. Example: x + 3 = 8, so x = 8 − 3 = 5.'},
+ {keys:['study','focus','timetable'],subject:'general',answer:'Try a 25-minute focused study session, take a 5-minute break, and set one clear goal for each session.'}
+];
+$('askDoubt').onclick=()=>{
+ const q=$('doubtText').value.trim().toLowerCase(),sub=$('doubtSubject').value,res=$('doubtResult');
+ res.hidden=false;res.replaceChildren();
+ const match=help.find(item=>(item.subject===sub||sub==='general'||(sub==='chemistry'&&item.subject==='chemistry'))&&item.keys.some(k=>q.includes(k)));
+ const heading=document.createElement('strong');
+ const para=document.createElement('p');
+ if(match){heading.textContent='Study tip / Explanation';para.textContent=match.answer}
+ else{heading.textContent='No matching built-in answer yet';para.textContent='Try keywords such as variable, loop, speed, force, atom, molecule, equation or photosynthesis. / Koi specific topic keyword likhkar dobara try karo. This demo does not use a live AI service.'}
+ res.append(heading,para);
+};
+</script>
 </body>
 </html>
